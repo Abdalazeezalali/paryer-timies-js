@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+        <style>
+        body{
+            background: linear-gradient(45deg,#240165,#05001c);
+            font-family: 'Tajawal',sans-serif;
+        }
+        #city{
+            font-size: 79px;
+            font-weight: 400;
+        }
+        h1,h2,h3,h4,h5,h6{
+            margin: 0;
+        }
+        .card{
+            width: 12%;
+            height: 80%;
+            background-color: white;
+            font-size: 15px;
+            box-shadow: 0px 10px 5px rgb(0 0 0 /30%);
+        }
+        .header{
+            background: linear-gradient(45deg,#5709ee,#7a37bf);
+            color: white;
+        }
+        .header h1{
+            font-weight: 400;
+            padding: 5px;
+        }
+        .center{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .time{
+            font-size: 60px;
+        }
+        option{
+            background-color:#5200e1;
+        }
+    </style>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link
+            href="https://fonts.googleapis.com/css2?family=Tajawal:wght@200;300;400;500;700;800;900&display=swap"
+            rel="stylesheet">
+    </head>
+    <body style="direction: rtl;">
+        <div style>
+            <div style="margin-top: 15px;">
+                <!-- start city name  -->
+                <div style="color: white;margin-right:40px">
+                    <h1 id="city">حلب</h1>
+                    <h6 style="font-size: 40px;font-weight:200" id="date">اليوم
+                    </h6>
+                </div>
+                <!-- end city name  -->
+                <hr style="margin: 0 50px; border-color:#5200e1;">
+                <!--start prayer timings  -->
+                <div
+                    style="height: 300px;margin-top:30px ;justify-content:space-around"
+                    class="center">
+                    <!-- start card  -->
+                    <div class="card">
+                        <div class="header">
+                            <h1>الفجر </h1>
+                        </div>
+                        <div class="body center" style="height: 80%;">
+                            <h1 class="time" id="fajr">
+                                الوقت
+                            </h1>
+                        </div>
+                    </div>
+                    <!-- end card  -->
+                    <!-- start card  -->
+                    <div class="card">
+                        <div class="header">
+                            <h1>الشروق</h1>
+                        </div>
+                        <div class="body center" style="height: 80%;">
+                            <h1 class="time" id="shrouq">
+                                الوقت
+                            </h1>
+                        </div>
+                    </div>
+                    <!-- end card  -->
+                    <!-- start card  -->
+                    <div class="card">
+                        <div class="header">
+                            <h1>الظهر</h1>
+                        </div>
+                        <div class="body center" style="height: 80%;">
+                            <h1 class="time" id="zoher">
+                                الوقت </h1>
+                        </div>
+                    </div>
+                    <!-- end card  -->
+                    <!-- start card  -->
+                    <div class="card">
+                        <div class="header">
+                            <h1>العصر</h1>
+                        </div>
+                        <div class="body center" style="height: 80%;">
+                            <h1 class="time" id="aser">
+                                الوقت </h1>
+                        </div>
+                    </div>
+                    <!-- end card  -->
+                    <!-- start card  -->
+                    <div class="card">
+                        <div class="header">
+                            <h1>المغرب</h1>
+                        </div>
+                        <div class="body center" style="height: 80%;">
+                            <h1 class="time" id="magreb">
+                                الوقت </h1>
+                        </div>
+                    </div>
+                    <!-- end card  -->
+                    <!-- start card  -->
+                    <div class="card">
+                        <div class="header">
+                            <h1>العشاء</h1>
+                        </div>
+                        <div class="body center" style="height: 80%;">
+                            <h1 class="time" id="ishaa">
+                                الوقت </h1>
+                        </div>
+                    </div>
+                    <!-- end card  -->
+                </div>
+                <!-- end prayer timings  -->
+            </div>
+            <!-- start select city  -->
+            <div class="center" style="margin-top: 40px;">
+                <select id="select"
+                    style="width: 300px;font-size:25px; font-family:tajawal;background:none;color:white;padding:5px;border-radius:20px">
+                </select>
+            </div>
+            <!-- end select city  -->
+        </div>
+    </body>
+    <script src="./node_modules/axios/dist/axios.min.js"></script>
+    <script>
+       // let cities=["حلب","دمشق","اللاذقية","حمص","حماة"] bad way
+       //good way
+        let cities=[
+        {
+            arabicName:"حلب",
+            name:"Aleppo"
+        }, {
+            arabicName:"دمشق",
+            name:"Damascus"
+        }, {
+            arabicName:"حمص",
+            name:"Homs"
+        }, {
+            arabicName:"حماة",
+            name:"Hama"
+        }, {
+            arabicName:"اللاذقية",
+            name:"Latakia"
+        },
+        ]
+        for(let city of cities){
+            const content=`<option>${city.arabicName}</option>`
+            document.getElementById("select").innerHTML+=content
+        }
+        document.getElementById("select").addEventListener('change', function(){
+            /* if(this.value=="حلب"){
+                GetPrayersTimingsOfCity("Aleppo")
+            }
+            else if(this.value=="حمص"){
+                GetPrayersTimingsOfCity("Homs")
+            }
+            else if(this.value=="حماة"){
+                GetPrayersTimingsOfCity("Hama")
+            }else if(this.value=="دمشق"){
+                GetPrayersTimingsOfCity("Damascus")
+            }else {
+                GetPrayersTimingsOfCity("Latakia")
+            }*/
+            document.getElementById("city").innerHTML=this.value
+            let cityName=""
+            for(let city of cities){
+                if(city.arabicName==this.value){
+                    cityName=city.name
+                }
+            }
+            GetPrayersTimingsOfCity(cityName)
+        })
+        function GetPrayersTimingsOfCity(cityName){
+
+            let params ={
+                country:"Sy",
+                city:cityName
+            }
+            axios.get('http://api.aladhan.com/v1/timingsByCity', {
+                params:params
+            })
+            .then(function (response) {
+                const timings=response.data.data.timings
+                fillTimeForPrayer("fajr",timings.Fajr)
+                fillTimeForPrayer("shrouq",timings.Sunrise)
+                fillTimeForPrayer("zoher",timings.Dhuhr)
+                fillTimeForPrayer("aser",timings.Asr)
+                fillTimeForPrayer("magreb",timings.Sunset)
+                fillTimeForPrayer("ishaa",timings.Isha)
+                const readableDate=response.data.data.date.readable
+                const weekDay=response.data.data.date.hijri.weekday.ar
+                const date=weekDay +' '+readableDate
+                document.getElementById("date").innerHTML=date
+            })
+            .catch(function (error) {
+                console.log(error);
+            }) 
+        }
+        GetPrayersTimingsOfCity("Aleppo")
+        function fillTimeForPrayer(id,time){
+            document.getElementById(id).innerHTML=time
+        }
+    </script>
+</html>
